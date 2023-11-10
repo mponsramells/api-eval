@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Tags  = require('../models/tags.js');
-
+const {Tags}  = require('../models/');
+const userAuth = require("../middlewares/auth");
+const userAuth = require("../middlewares/auth.js");
+router.use(userAuth.authenticateUser);
 router.get('/', function(req, res){
     Tags.findAll().then(tags => {
         res.json(tags);
@@ -21,6 +23,7 @@ router.get('/:id', function(req, res){
         res.status(500);
     });
 });
+router.use(userAuth.authenticateAdmin);
 router.post('/', function(req, res){
     let data = req.body;
     Tags.create({

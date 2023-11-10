@@ -1,6 +1,7 @@
 const sequelize = require('./_database');
 const {DataTypes} = require("sequelize");
 
+
 const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING(80),
@@ -17,6 +18,11 @@ const User = sequelize.define('User', {
     display_name: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'user'
     },
 });
 

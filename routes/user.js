@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user.js');
+const {User} = require('../models/');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const {log} = require("debug");
+const userAuth = require("../middlewares/auth.js");
+
+router.use(userAuth.authenticateUser);
 
 function generateToken(id) {
     return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '1d'});
@@ -21,7 +24,8 @@ router.post('/signup', function (req, res, next) {
                         await User.create({
                             email: data.email,
                             password: data.password,
-                            display_name: data.display_name
+                            display_name: data.display_name,
+                            role: data.role
                         });
                     }
                     res.status(201);
@@ -70,7 +74,7 @@ router.post('/login', function (req, res, next) {
         res.status(500);
     }
 });
-
+router.use(userAuth.authenticateAdmin);
 router.get('/', function (req, res, next) {
     try {
         const user = async () => {
