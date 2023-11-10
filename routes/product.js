@@ -26,9 +26,10 @@ router.get('/:id', function(req, res){
 router.post('/', function(req, res){
     let data = req.body;
     Product.create({
-        name: data.name,
+        title: data.title,
         price: data.price,
         description: data.description,
+        stock: data.stock,
     }).then(product => {
         res.json(product);
         res.status(201);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Tags } = require('../models/tags.js');
+const Tags  = require('../models/tags.js');
 
 router.get('/', function(req, res){
     Tags.findAll().then(tags => {
@@ -29,7 +29,7 @@ router.post('/', function(req, res){
         res.json(tags);
         res.status(201);
     }).catch(error => {
-        console.log(error);
+        res.json(error);
         res.status(500);
     });
 });
@@ -44,10 +44,10 @@ router.patch('/:id', function(req, res){
             id: tagsId
         }
     }).then(tags => {
-        res.json(tags);
+        res.json('edited');
         res.status(201);
     }).catch(error => {
-        console.log(error);
+        res.json(error);
         res.status(500);
     });
 });
