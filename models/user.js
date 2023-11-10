@@ -3,8 +3,12 @@ const {DataTypes} = require("sequelize");
 
 const User = sequelize.define('User', {
     email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(80),
         allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true
+        }
     },
     password: {
         type: DataTypes.STRING,

@@ -19,8 +19,11 @@ Cart.belongsToMany(Product, {through: "cart_product"});
 Order.belongsToMany(Product, {through: Product_order});
 Product.belongsToMany(Order, {through: Product_order});
 
-// Synchronisation de la base
-sequelize.sync({alter: true});
+//Synchronisation de la base
+// async function syncDb() {
+//     await sequelize.sync({alter: true});
+// }
+// syncDb()
 
 
 module.exports = {

@@ -12,11 +12,11 @@ require('./models/index.js');
 
 // Importation des routeurs
 const indexRouter = require('./routes/index.js');
-// const productRouter = require('./routes/product.js');
-// const tagsRouter = require('./routes/tags.js');
-// const userRouter = require('./routes/user.js');
-// const cartRouter = require('./routes/cart.js');
-// const orderRouter = require('./routes/order.js');
+const productRouter = require('./routes/product.js');
+const tagsRouter = require('./routes/tags.js');
+const userRouter = require('./routes/user.js');
+const cartRouter = require('./routes/cart.js');
+const orderRouter = require('./routes/order.js');
 
 const app = express();
 
@@ -26,10 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', indexRouter);
-// app.use('/product', productRouter)
-// app.use('/tags', tagsRouter)
-// app.use('/user', userRouter)
-// app.use('/cart', cartRouter)
-// app.use('/order', orderRouter)
+app.use('/product', productRouter)
+app.use('/tags', tagsRouter)
+app.use('/user', userRouter)
+app.use('/cart', cartRouter)
+app.use('/order', orderRouter)
 
 module.exports = app;

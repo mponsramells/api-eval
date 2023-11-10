@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {User} = require('../models/user.js');
+const User = require('../models/user.js');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const {log} = require("debug");
 
 function generateToken(id) {
     return jwt.sign({id: id}, process.env.JWT_SECRET, {expiresIn: '1d'});
@@ -10,27 +11,33 @@ function generateToken(id) {
 
 router.post('/signup', function (req, res, next) {
     let data = req.body;
-    if (data.password.length > 8) {
-        bcrypt.hash(data.password, 12).then(hash => {
-            data.password = hash;
-            try {
-                const user = async () => {
-                    await User.create({
-                        email: data.email,
-                        password: data.password,
-                        display_name: data.display_name
-                    });
+    log(data);
+    try {
+        if (data.password.length > 8) {
+            bcrypt.hash(data.password, 12).then(hash => {
+                data.password = hash;
+                try {
+                    const user = async () => {
+                        await User.create({
+                            email: data.email,
+                            password: data.password,
+                            display_name: data.display_name
+                        });
+                    }
+                    res.status(201);
+                    res.json('post');
+                    return user();
+                } catch (error) {
+                    res.status(error.status);
                 }
-                res.json('post');
-                res.status(201);
-                return user();
-            } catch (error) {
-                res.status(error.status);
-            }
-        });
-    } else {
-        res.send('Invalid password length');
-        res.status(500);
+            });
+        } else {
+            res.send('Invalid password length');
+            res.status(500);
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(error);
     }
 });
 router.post('/login', function (req, res, next) {
