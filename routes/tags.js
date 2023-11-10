@@ -1,55 +1,50 @@
 const express = require('express');
 const router = express.Router();
-const { Product } = require('../models/Product');
+const { Tags } = require('../models/tags.js');
 
 router.get('/', function(req, res){
-    Product.findAll().then(products => {
-        res.json(products);
+    Tags.findAll().then(tags => {
+        res.json(tags);
         res.status(200);
     }).catch(error => {
         console.log(error);
         res.status(500);
     });
 });
-
 router.get('/:id', function(req, res){
-    let productId = req.params.id;
-    Product.findByPk(productId).then(product => {
-        res.json(product);
+    let tagsId = req.params.id;
+    Tags.findByPk(tagsId).then(tags => {
+        res.json(tags);
         res.status(200);
     }).catch(error => {
         console.log(error);
         res.status(500);
     });
 });
-
 router.post('/', function(req, res){
     let data = req.body;
-    Product.create({
+    Tags.create({
         name: data.name,
-        price: data.price,
-        description: data.description,
-    }).then(product => {
-        res.json(product);
+    }).then(tags => {
+        res.json(tags);
         res.status(201);
     }).catch(error => {
         console.log(error);
         res.status(500);
     });
 });
+
 router.patch('/:id', function(req, res){
-    let productId = req.params.id;
+    let tagsId = req.params.id;
     let data = req.body;
-    Product.update({
+    Tags.update({
         name: data.name,
-        price: data.price,
-        description: data.description,
     }, {
         where: {
-            id: productId
+            id: tagsId
         }
-    }).then(product => {
-        res.json(product);
+    }).then(tags => {
+        res.json(tags);
         res.status(201);
     }).catch(error => {
         console.log(error);
@@ -58,13 +53,13 @@ router.patch('/:id', function(req, res){
 });
 
 router.delete('/:id', function(req, res){
-    let productId = req.params.id;
-    Product.destroy({
+    let tagsId = req.params.id;
+    Tags.destroy({
         where: {
-            id: productId
+            id: tagsId
         }
-    }).then(product => {
-        res.json(product);
+    }).then(tags => {
+        res.json(tags);
         res.status(201);
     }).catch(error => {
         console.log(error);

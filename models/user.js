@@ -1,23 +1,19 @@
 const sequelize = require('./_database');
 const {DataTypes} = require("sequelize");
 
-const Product = sequelize.define('Product', {
+const User = sequelize.define('User', {
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    display_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
 
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    price: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
-    },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    stock: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-})
-module.exports = Product
+module.exports = User
